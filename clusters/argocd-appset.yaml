@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: cluster
+  name: applications
   namespace: argocd
 spec:
   goTemplate: true
@@ -37,3 +37,6 @@ spec:
       syncPolicy:
         syncOptions:
           - CreateNamespace=true
+        automated:
+          prune: true
+          selfHeal: true
