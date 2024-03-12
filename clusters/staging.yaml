@@ -1,0 +1,39 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: cluster
+  namespace: argocd
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+    - &git_generator
+      git:
+        repoURL: https://github.com/seanturner026/argocd-applicationset.git
+        revision: HEAD # Use specific branch when upgrading Clusters.
+        directories:
+          - path: apps/infra/argo-rollouts
+        values:
+          namespace: argo-rollouts
+
+    # - <<: *git_generator
+    #   directories:
+    #     - path: apps/web/*
+    #   values:
+    #     namespace: argocd
+  template:
+    metadata:
+      name: "{{.path.basename}}"
+      namespace: "{{.values.namespace}}"
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/seanturner026/argocd-applicationset.git # Can this be gotemplated?
+        targetRevision: HEAD # ditto
+        path: "{{.path.path}}"
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: "{{.path.basename}}"
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true
