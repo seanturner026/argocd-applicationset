@@ -2,7 +2,7 @@
 
 kind create cluster --name local
 kubectl create namespace argocd
-kubectl apply -f https://raw.githubusercontent.com/argoproj/argo-cd/master/manifests/install.yaml
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 
 i=0
 max_attempts=3
@@ -15,7 +15,7 @@ do
     echo "Secret '$secret_name' not found after $max_attempts attempts."
     exit 1
   fi
-  sleep 1
+  sleep 8
 done
 
 password=$(kubectl get secret $secret_name -n argocd -o jsonpath='{.data.password}' | base64 --decode)

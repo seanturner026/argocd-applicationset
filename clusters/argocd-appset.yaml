@@ -7,20 +7,21 @@ spec:
   goTemplate: true
   goTemplateOptions: ["missingkey=error"]
   generators:
-    - &git_generator
-      git:
+    - git: &git_generator
         repoURL: https://github.com/seanturner026/argocd-applicationset.git
-        revision: HEAD # Use specific branch when upgrading Clusters.
+        revision: HEAD
         directories:
           - path: apps/infra/argo-rollouts
         values:
           namespace: argo-rollouts
 
-    # - <<: *git_generator
-    #   directories:
-    #     - path: apps/web/*
-    #   values:
-    #     namespace: argocd
+    - git:
+        <<: *git_generator
+        directories:
+          - path: apps/infra/nginx
+        values:
+          namespace: nginx
+
   template:
     metadata:
       name: "{{.path.basename}}"
