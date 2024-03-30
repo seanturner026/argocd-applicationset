@@ -15,7 +15,7 @@ do
     echo "Secret '$secret_name' not found after $max_attempts attempts."
     exit 1
   fi
-  sleep 3
+  sleep 8
 done
 
 password=$(kubectl get secret $secret_name -n argocd -o jsonpath='{.data.password}' | base64 --decode)
