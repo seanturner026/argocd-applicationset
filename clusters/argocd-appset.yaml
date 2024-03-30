@@ -9,7 +9,7 @@ spec:
   generators:
     - git: &git_generator
         repoURL: https://github.com/seanturner026/argocd-applicationset.git
-        revision: wip
+        revision: HEAD
         directories:
           - path: apps/infra/argo-rollouts
         values:
@@ -30,7 +30,7 @@ spec:
       project: default
       source:
         repoURL: https://github.com/seanturner026/argocd-applicationset.git # Can this be gotemplated?
-        targetRevision: wip # ditto
+        targetRevision: HEAD # ditto
         path: "{{.path.path}}"
       destination:
         server: https://kubernetes.default.svc

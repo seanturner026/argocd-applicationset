@@ -7,7 +7,7 @@ spec:
   project: default
   source:
     repoURL: https://github.com/seanturner026/argocd-applicationset
-    targetRevision: wip
+    targetRevision: HEAD
     path: clusters
   destination:
     server: https://kubernetes.default.svc
