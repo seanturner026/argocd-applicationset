@@ -13,14 +13,14 @@ spec:
         revision: wip
         directories:
           - path: apps/infra/argo-rollouts
-        # values:
-        #   namespace: argo-rollouts
+        values:
+          namespace: argo-rollouts
 
     - <<: *git_generator
       directories:
         - path: apps/infra/nginx
-      # values:
-      #   namespace: nginx
+      values:
+        namespace: nginx
 
   template:
     metadata:
