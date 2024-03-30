@@ -10,17 +10,18 @@ spec:
     - &git_generator
       git:
         repoURL: https://github.com/seanturner026/argocd-applicationset.git
-        revision: HEAD # Use specific branch when upgrading Clusters.
+        revision: wip
         directories:
           - path: apps/infra/argo-rollouts
-        values:
-          namespace: argo-rollouts
+        # values:
+        #   namespace: argo-rollouts
 
-    # - <<: *git_generator
-    #   directories:
-    #     - path: apps/web/*
-    #   values:
-    #     namespace: argocd
+    - <<: *git_generator
+      directories:
+        - path: apps/infra/nginx
+      # values:
+      #   namespace: nginx
+
   template:
     metadata:
       name: "{{.path.basename}}"
@@ -29,7 +30,7 @@ spec:
       project: default
       source:
         repoURL: https://github.com/seanturner026/argocd-applicationset.git # Can this be gotemplated?
-        targetRevision: HEAD # ditto
+        targetRevision: wip # ditto
         path: "{{.path.path}}"
       destination:
         server: https://kubernetes.default.svc

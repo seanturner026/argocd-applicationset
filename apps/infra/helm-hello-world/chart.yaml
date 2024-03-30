@@ -1,0 +1,10 @@
+apiVersion: v2
+type: application
+name: helm-hello-world
+description: Applications
+version: 1.0.0
+appVersion: "1.0"
+dependencies:
+  - name: hello-world
+    version: 0.1.0
+    repository: https://example.com:443/artifactory/helm-local
