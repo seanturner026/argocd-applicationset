@@ -4,15 +4,15 @@ kind: Kustomization
 namespace: nginx
 
 configMapGenerator:
-- name: nginx
-  namespace: default
-  files:
-  - index.html
+  - name: nginx
+    namespace: default
+    files:
+      - index.html
 
 helmChartInflationGenerator:
-- chartName: nginx
-  chartRepoUrl: https://charts.bitnami.com/bitnami
-  chartVersion: 15.14.0
-  releaseName: nginx
-  releaseNamespace: nginx
-  # values: values.yaml
+  - chartName: nginx
+    chartRepoUrl: https://charts.bitnami.com/bitnami
+    chartVersion: 15.14.0
+    releaseName: nginx
+    releaseNamespace: nginx
+    # values: values.yaml

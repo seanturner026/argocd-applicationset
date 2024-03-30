@@ -7,10 +7,9 @@ spec:
   goTemplate: true
   goTemplateOptions: ["missingkey=error"]
   generators:
-    - git:
-        &git_generator
+    - git: &git_generator
         repoURL: https://github.com/seanturner026/argocd-applicationset.git
-        revision: HEAD
+        revision: wip
         directories:
           - path: apps/infra/argo-rollouts
         values:
@@ -31,7 +30,7 @@ spec:
       project: default
       source:
         repoURL: https://github.com/seanturner026/argocd-applicationset.git # Can this be gotemplated?
-        targetRevision: HEAD # ditto
+        targetRevision: wip # ditto
         path: "{{.path.path}}"
       destination:
         server: https://kubernetes.default.svc
