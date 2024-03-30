@@ -20,10 +20,10 @@ spec:
     - git:
         repoURL: https://github.com/seanturner026/argocd-applicationset.git
         revision: wip
-      directories:
-        - path: apps/infra/nginx
-      values:
-        namespace: nginx
+        directories:
+          - path: apps/infra/nginx
+        values:
+          namespace: nginx
 
   template:
     metadata:
