@@ -7,8 +7,8 @@ spec:
   goTemplate: true
   goTemplateOptions: ["missingkey=error"]
   generators:
-    - &git_generator
-      git:
+    - git:
+        &git_generator
         repoURL: https://github.com/seanturner026/argocd-applicationset.git
         revision: wip
         directories:
@@ -16,10 +16,8 @@ spec:
         values:
           namespace: argo-rollouts
 
-    # # - <<: *git_generator
     - git:
-        repoURL: https://github.com/seanturner026/argocd-applicationset.git
-        revision: wip
+        <<: *git_generator
         directories:
           - path: apps/infra/nginx
         values:
