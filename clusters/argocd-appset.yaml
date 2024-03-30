@@ -16,7 +16,10 @@ spec:
         values:
           namespace: argo-rollouts
 
-    - <<: *git_generator
+    # - <<: *git_generator
+    - git:
+        repoURL: https://github.com/seanturner026/argocd-applicationset.git
+        revision: wip
       directories:
         - path: apps/infra/nginx
       values:
