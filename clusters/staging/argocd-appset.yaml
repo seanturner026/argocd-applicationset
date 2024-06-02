@@ -7,30 +7,30 @@ spec:
   goTemplate: true
   goTemplateOptions: ["missingkey=error"]
   generators:
-    - git: &git_generator
+    - git:
         repoURL: https://github.com/seanturner026/argocd-applicationset.git
         revision: HEAD
         directories:
-          - path: apps/infra/argo-rollouts
+          - path: apps/infra/*
         values:
-          namespace: argo-rollouts
-
+            name: "{{index .path.segments 2}}"
+    # This one doesn't technically need to utilize an overlay, but, also want to simulate the behavior for staging only
+    # Applications.
     - git:
-        <<: *git_generator
+        repoURL: https://github.com/seanturner026/argocd-applicationset.git
+        revision: HEAD
         directories:
-          - path: apps/infra/nginx
+          - path: apps/infra/*/overlays/staging
         values:
-          namespace: nginx
-
+          name: "{{index .path.segments 2}}-{{index .path.segments 4}}"
   template:
     metadata:
-      name: "{{.path.basename}}"
-      namespace: "{{.values.namespace}}"
+      name: "{{.values.name}}"
     spec:
       project: default
       source:
-        repoURL: https://github.com/seanturner026/argocd-applicationset.git # Can this be gotemplated?
-        targetRevision: HEAD # ditto
+        repoURL: https://github.com/seanturner026/argocd-applicationset.git
+        targetRevision: HEAD
         path: "{{.path.path}}"
       destination:
         server: https://kubernetes.default.svc
