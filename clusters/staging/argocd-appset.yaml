@@ -14,6 +14,7 @@ spec:
           - path: apps/infra/*
         values:
             name: "{{index .path.segments 2}}"
+
     # This one doesn't technically need to utilize an overlay, but, also want to simulate the behavior for staging only
     # Applications.
     - git:
@@ -23,6 +24,7 @@ spec:
           - path: apps/infra/*/overlays/staging
         values:
           name: "{{index .path.segments 2}}-{{index .path.segments 4}}"
+
   template:
     metadata:
       name: "{{.values.name}}"

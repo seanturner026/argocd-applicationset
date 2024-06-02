@@ -9,6 +9,10 @@ configMapGenerator:
     files:
       - index.html
 
+# If multiple environments needed to be supported, do the following:
+# - Specify a values.yaml in a non overlays directory
+# - Utilize additionalValuesFiles to specify the environment specific values
+#   - https://kubectl.docs.kubernetes.io/references/kustomize/builtins/#_helmchartinflationgenerator_
 helmChartInflationGenerator:
   - chartName: nginx
     chartRepoUrl: https://charts.bitnami.com/bitnami
