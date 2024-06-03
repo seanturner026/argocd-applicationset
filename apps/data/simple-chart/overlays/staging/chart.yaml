@@ -1,0 +1,14 @@
+# https://fabianlee.org/2022/04/18/kubernetes-kustomize-with-helm-charts/
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: simple-chart
+
+helmChartInflationGenerator:
+  - chartName: simple-chart
+    chartRepoUrl: https://seanturner026.github.io/simple-helm
+    chartVersion: 0.3.0
+    releaseName: simple-chart
+    releaseNamespace: simple-chart
+    values: values.yaml # Values for staging
+    additionalValuesFiles:
+      - ../../values.yaml # Default values for all environments

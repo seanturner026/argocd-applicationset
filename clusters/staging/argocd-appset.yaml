@@ -11,17 +11,15 @@ spec:
         repoURL: https://github.com/seanturner026/argocd-applicationset.git
         revision: HEAD
         directories:
-          - path: apps/infra/*
+          - path: apps/infra/*/overlays/staging
         values:
             name: "{{index .path.segments 2}}"
 
-    # This one doesn't technically need to utilize an overlay, but, also want to simulate the behavior for staging only
-    # Applications.
     - git:
         repoURL: https://github.com/seanturner026/argocd-applicationset.git
         revision: HEAD
         directories:
-          - path: apps/infra/*/overlays/staging
+          - path: apps/data/*/overlays/staging
         values:
           name: "{{index .path.segments 2}}-{{index .path.segments 4}}"
 
