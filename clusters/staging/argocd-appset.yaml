@@ -13,7 +13,7 @@ spec:
         directories:
           - path: apps/infra/*/overlays/staging
         values:
-            name: "{{index .path.segments 2}}"
+          name: "{{index .path.segments 2}}"
 
     - git:
         repoURL: https://github.com/seanturner026/argocd-applicationset.git
