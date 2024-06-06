@@ -14,7 +14,6 @@ spec:
           - path: apps/infra/*/overlays/staging
         values:
           name: "{{index .path.segments 2}}"
-          namespace: "{{index .path.segments 2}}"
 
     - git:
         repoURL: https://github.com/seanturner026/argocd-applicationset.git
@@ -23,12 +22,10 @@ spec:
           - path: apps/data/*/overlays/staging
         values:
           name: "{{index .path.segments 2}}-{{index .path.segments 4}}"
-          namespace: "{{index .path.segments 2}}-{{index .path.segments 4}}"
 
   template:
     metadata:
       name: "{{.values.name}}"
-      namespace: "{.values.namespace}"
     spec:
       project: default
       source:
@@ -37,7 +34,7 @@ spec:
         path: "{{.path.path}}"
       destination:
         server: https://kubernetes.default.svc
-        namespace: "{{.path.basename}}"
+        namespace: "{{.values.name}}"
       syncPolicy:
         syncOptions:
           - CreateNamespace=true
