@@ -8,9 +8,9 @@ helmCharts:
     repo: https://seanturner026.github.io/simple-helm
     version: 0.3.0
     releaseName: simple-chart
-    valuesFile: values.yaml # Values for staging
+    valuesFile: ../../values.yaml # Default values for all environments
     additionalValuesFiles:
-      - ../../values.yaml # Default values for all environments
+      - values.yaml # Values for staging
 
 # helmChartInflationGenerator:
 #   - chartName: simple-chart
