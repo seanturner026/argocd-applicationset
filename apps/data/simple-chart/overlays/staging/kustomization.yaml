@@ -5,7 +5,7 @@ namespace: simple-chart
 helmCharts:
   - name: chart
     repo: https://seanturner026.github.io/simple-helm
-    version: 0.4.0
+    version: 0.5.0
     releaseName: simple-chart
     includeCRDs: true
     valuesFile: ../../values.yaml
