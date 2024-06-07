@@ -7,4 +7,3 @@
    to be a directory for web applications that all utilize the ArgoCD Image Updater so that wildcards `*` can be
    leveraged?
 1. Is the `helmCharts` compatible with ArgoCD Image Updater `annotations`?
-1. How to share a `values.yaml` between multiple overlay'd `helmCharts`?

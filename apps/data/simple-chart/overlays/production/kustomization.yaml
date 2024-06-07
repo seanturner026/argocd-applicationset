@@ -1,0 +1,13 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: simple-chart-production
+
+helmCharts:
+  - name: chart
+    repo: https://seanturner026.github.io/simple-helm
+    version: 0.5.0
+    releaseName: simple-chart
+    includeCRDs: true
+    valuesFile: ../../values.yaml
+    additionalValuesFiles:
+      - values.yaml

@@ -23,6 +23,15 @@ spec:
         values:
           name: "{{index .path.segments 2}}-{{index .path.segments 4}}"
 
+    # Wouldn't actually deploy a production generator here, but want to demonstrate shared values.yaml
+    - git:
+        repoURL: https://github.com/seanturner026/argocd-applicationset.git
+        revision: HEAD
+        directories:
+          - path: apps/data/*/overlays/production
+        values:
+          name: "{{index .path.segments 2}}-{{index .path.segments 4}}"
+
   template:
     metadata:
       name: "{{.values.name}}"
