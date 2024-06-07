@@ -7,3 +7,4 @@
    to be a directory for web applications that all utilize the ArgoCD Image Updater so that wildcards `*` can be
    leveraged?
 1. Is the `helmCharts` compatible with ArgoCD Image Updater `annotations`?
+1. Can I do a helm chart that is local to this repository?
