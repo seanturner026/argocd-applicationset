@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: go-http
+spec:
+  replicas: 1
+  template:
+    spec:
+      containers:
+        - image: seanturner026/kube-playground-http-server:arm
+          imagePullPolicy: Always
+          name: go-http
+          resources:
+            requests:
+              memory: 32Mi
+              cpu: 5m
+          securityContext:
+            runAsUser: 10001
+            allowPrivilegeEscalation: false
+          env:
+            - name: COLOR
+              value: blue
+          ports:
+            - name: http
+              containerPort: 8080

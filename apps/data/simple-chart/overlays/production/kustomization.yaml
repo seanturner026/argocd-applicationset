@@ -8,6 +8,6 @@ helmCharts:
     version: 0.5.0
     releaseName: simple-chart
     includeCRDs: true
-    valuesFile: ../../values.yaml
+    valuesFile: ../../base.yaml
     additionalValuesFiles:
       - values.yaml

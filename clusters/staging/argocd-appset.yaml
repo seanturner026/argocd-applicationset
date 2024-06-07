@@ -15,17 +15,30 @@ spec:
           # values.yaml
           - path: apps/data/*/overlays/production
           - path: apps/data/*/overlays/staging
+        values:
+          name: "{{ index .path.segments 2 }}-{{ index .path.segments 4 }}"
+          environment: "{{index .path.segments 4}}"
+
+    - git:
+        repoURL: https://github.com/seanturner026/argocd-applicationset.git
+        revision: HEAD
+        directories:
+          - path: apps/data/http-server/overlays/staging
+        values:
+          name: "{{ index .path.segments 2 }}-{{ index .path.segments 4 }}"
+          environment: "{{index .path.segments 4}}"
+          annotations:
+            argocd-image-updater.argoproj.io/image-list: seanturner026/kube-playground-http-server:latest
+            argocd-image-updater.argoproj.io/update-strategy: digest
+            argocd-image-updater.argoproj.io/write-back-method: argocd
+
+    - git:
+        repoURL: https://github.com/seanturner026/argocd-applicationset.git
+        revision: HEAD
+        directories:
           - path: apps/infra/*/overlays/staging
         values:
-          # Don't include the environment in the Application name for infra Applications as they do not deploy multiple
-          # environments on the same Cluster.
-          name: |-
-            {{- if eq (index .path.segments 1) "infra" -}}
-            {{ index .path.segments 2 }}
-            {{- else -}}
-            {{ index .path.segments 2 }}-{{ index .path.segments 4 }}
-            {{- end -}}
-          application_name: "{{ index .path.segments 2 }}"
+          name: "{{ index .path.segments 2 }}"
           environment: "{{index .path.segments 4}}"
 
   template:
@@ -34,6 +47,11 @@ spec:
       annotations:
         notifications.argoproj.io/subscribe.on-health-degraded.slack: argocd
         notifications.argoproj.io/subscribe.on-sync-failed.slack: argocd
+        {{- if .values.annotations }}
+        {{- range $key, $value := .values.annotations }}
+        {{ $key }}: {{ $value }}
+        {{- end }}
+        {{- end }}
       labels:
         environment: "{{.values.environment}}"
     spec:
