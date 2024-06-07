@@ -11,9 +11,6 @@ spec:
         repoURL: https://github.com/seanturner026/argocd-applicationset.git
         revision: HEAD
         directories:
-          # Wouldn't actually deploy a production Application in this ApplicationSet, but, want to demonstrate shared
-          # values.yaml
-          - path: apps/infra/*/overlays/production
           - path: apps/infra/*/overlays/staging
         values:
           name: "{{ index .path.segments 2 }}"
@@ -27,6 +24,7 @@ spec:
         notifications.argoproj.io/subscribe.on-sync-failed.slack: argocd
       labels:
         environment: "{{.values.environment}}"
+        team: infra
     spec:
       project: default
       source:

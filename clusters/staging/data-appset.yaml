@@ -29,6 +29,7 @@ spec:
         argocd-image-updater.argoproj.io/write-back-method: argocd
       labels:
         environment: "{{.values.environment}}"
+        team: data
     spec:
       project: default
       source:
