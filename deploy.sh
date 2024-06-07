@@ -2,9 +2,9 @@
 
 set -euo pipefail
 
-# kind create cluster --name local
-# kubectl create namespace argocd
-# kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+kind create cluster --name local
+kubectl create namespace argocd
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 
 i=0
 max_attempts=15
