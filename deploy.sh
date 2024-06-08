@@ -9,7 +9,7 @@ kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/st
 i=0
 max_attempts=15
 secret_name=argocd-initial-admin-secret
-echo -e "\nWaiting for ArgoCD to come online...\n"
+echo -e "\nWaiting for ArgoCD to come online..."
 until kubectl get secret $secret_name -n argocd &> /dev/null
 do
   i=$((i+1))

@@ -1,0 +1,60 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: infra
+  namespace: argocd
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+    - git:
+        repoURL: https://github.com/seanturner026/argocd-applicationset.git
+        revision: HEAD
+        directories:
+          - path: apps/data/http-server/overlays/staging
+        values:
+          name: "{{ index .path.segments 2 }}-{{ index .path.segments 4 }}"
+          environment: "{{ index .path.segments 4 }}"
+          images: seanturner026/kube-playground-http-server:latest
+          strategy: digest
+
+    - git:
+        repoURL: https://github.com/seanturner026/argocd-applicationset.git
+        revision: HEAD
+        directories:
+          - path: apps/infra/*/overlays/staging
+        values:
+          name: "{{ index .path.segments 2 }}"
+          environment: "{{ index .path.segments 4 }}"
+
+  template:
+    metadata:
+      name: "{{ .values.name }}"
+      labels:
+        team: infra
+        environment: "{{ .values.environment }}"
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/seanturner026/argocd-applicationset.git
+        targetRevision: HEAD
+        path: "{{ .path.path }}"
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: "{{ .values.name }}"
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true
+        automated:
+          prune: true
+          selfHeal: true
+  templatePatch: |
+    metadata:
+      annotations:
+        notifications.argoproj.io/subscribe.on-health-degraded.slack: argocd
+        notifications.argoproj.io/subscribe.on-sync-failed.slack: argocd
+        {{- if index .values "images" }}
+        argocd-image-updater.argoproj.io/image-list: {{ .values.images }}
+        argocd-image-updater.argoproj.io/update-strategy: {{ .values.strategy }}
+        argocd-image-updater.argoproj.io/write-back-method: argocd
+        {{- end }}
