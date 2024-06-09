@@ -21,8 +21,7 @@ do
   sleep 2
 done
 
-kubectl apply -f clusters/staging/data-appset.yaml
-kubectl apply -f clusters/staging/infra-appset.yaml
+kubectl apply -f clusters/staging/argocd-appset.yaml
 
 if [ -z "${GITHUB_TOKEN}" ]
 then

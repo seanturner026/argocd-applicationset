@@ -15,6 +15,7 @@ spec:
         values:
           name: "{{ index .path.segments 2 }}-{{ index .path.segments 4 }}"
           environment: "{{ index .path.segments 4 }}"
+          team: data
           images: seanturner026/kube-playground-http-server:latest
           strategy: digest
 
@@ -26,12 +27,13 @@ spec:
         values:
           name: "{{ index .path.segments 2 }}"
           environment: "{{ index .path.segments 4 }}"
+          team: infra
 
   template:
     metadata:
       name: "{{ .values.name }}"
       labels:
-        team: infra
+        team: "{{ .values.team }}"
         environment: "{{ .values.environment }}"
     spec:
       project: default
