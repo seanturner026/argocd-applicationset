@@ -5,4 +5,4 @@ metadata:
   name: argocd-image-updater-config
   namespace: argocd
 data:
-  argocd.insecure: true # Needed to avoid certificate errors when running locally.
+  argocd.insecure: "true" # Needed to avoid certificate errors when running locally.
