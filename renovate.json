@@ -25,7 +25,7 @@
     "regexManagers": [
         {
             "fileMatch": [
-                "cluster\/.+\/kustomization.ya?ml$"
+                "apps\/.+\/kustomization.ya?ml$"
             ],
             "matchStrings": [
                 "https:\/\/github\\.com\/(?<depName>.*\/.*?)\/releases\/download\/(?<currentValue>.*?)\/"
@@ -34,7 +34,7 @@
         },
         {
             "fileMatch": [
-                "cluster\/.+\/kustomization.ya?ml$"
+                "apps\/.+\/kustomization.ya?ml$"
             ],
             "matchStrings": [
                 "https:\/\/raw\\.githubusercontent\\.com\/(?<depName>[^\/]*\/[^\/]*)\/(?<currentValue>.*?)\/"
