@@ -5,3 +5,7 @@ kind: Kustomization
 resources:
   - resources/configmap.yaml
   - resources/cron-job.yaml
+
+images:
+  - name: renovate/renovate
+    newTag: "37.400"

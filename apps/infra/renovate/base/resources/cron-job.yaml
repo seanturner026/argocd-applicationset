@@ -12,7 +12,7 @@ spec:
       template:
         spec:
           containers:
-            - image: renovate/renovate:35.38.0
+            - image: renovate/renovate:37.400
               name: renovate
               env:
                 - name: RENOVATE_GIT_AUTHOR
