@@ -21,5 +21,25 @@
             "(^|/)kustomization\\.ya?ml$"
         ],
         "pinDigests": false
-    }
+    },
+    "regexManagers": [
+        {
+            "fileMatch": [
+                "cluster\/.+\/kustomization.ya?ml$"
+            ],
+            "matchStrings": [
+                "https:\/\/github\\.com\/(?<depName>.*\/.*?)\/releases\/download\/(?<currentValue>.*?)\/"
+            ],
+            "datasourceTemplate": "github-releases"
+        },
+        {
+            "fileMatch": [
+                "cluster\/.+\/kustomization.ya?ml$"
+            ],
+            "matchStrings": [
+                "https:\/\/raw\\.githubusercontent\\.com\/(?<depName>[^\/]*\/[^\/]*)\/(?<currentValue>.*?)\/"
+            ],
+            "datasourceTemplate": "github-tags"
+        }
+    ]
 }
