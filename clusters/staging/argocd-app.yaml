@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/seanturner026/argocd-applicationset
     targetRevision: main
-    path: clusters/staging/argocd-appset.yaml
+    path: clusters/staging
   destination:
     server: https://kubernetes.default.svc
   syncPolicy:
