@@ -3,6 +3,8 @@ kind: Application
 metadata:
   name: application-set
   namespace: argocd
+  labels:
+    environment: staging
 spec:
   project: default
   source:
