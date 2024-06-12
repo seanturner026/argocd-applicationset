@@ -7,3 +7,4 @@
 1. Can I do a helm chart that is local to this repository?
 1. Get renovate working with kustomization images
 1. Get renovate working with kustomization resource versions?
+1. Set finalizers based on Application
