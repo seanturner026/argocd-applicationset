@@ -3,6 +3,8 @@ kind: ApplicationSet
 metadata:
   name: staging
   namespace: argocd
+  labels:
+    environment: staging
 spec:
   syncPolicy:
     preserveResourcesOnDeletion: true
