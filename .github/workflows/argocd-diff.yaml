@@ -32,6 +32,7 @@ jobs:
             -v $(pwd)/output:/output \
             -e TARGET_BRANCH=${{ github.head_ref }} \
             -e REPO=${{ github.repository }} \
+            -e KUSTOMIZE_BUILD_OPTIONS="--load-restrictor LoadRestrictionsNone --enable-helm" \
             dagandersen/argocd-diff-preview:v0.0.10
 
       - name: Post diff as comment
