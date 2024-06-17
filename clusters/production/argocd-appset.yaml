@@ -1,0 +1,40 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: production
+  namespace: argocd
+spec:
+  syncPolicy:
+    preserveResourcesOnDeletion: true
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+    - git:
+        repoURL: https://github.com/seanturner026/argocd-applicationset.git
+        revision: HEAD
+        directories:
+          - path: apps/infra/*/overlays/production
+        values:
+          name: "{{ index .path.segments 2 }}"
+
+  template:
+    metadata:
+      name: "{{ .values.name }}"
+      labels:
+        team: "{{ index .path.segments 1 }}"
+        environment: "{{ index .path.segments 4 }}"
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/seanturner026/argocd-applicationset.git
+        targetRevision: HEAD
+        path: "{{ .path.path }}"
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: "{{ .values.name }}"
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true
+        automated:
+          prune: true
+          selfHeal: true
