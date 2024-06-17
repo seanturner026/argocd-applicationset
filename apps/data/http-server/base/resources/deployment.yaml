@@ -6,7 +6,7 @@ spec:
   selector:
     matchLabels:
       app.kubernetes.io/name: go-http
-  replicas: 10
+  replicas: 2
   template:
     metadata:
       labels:
