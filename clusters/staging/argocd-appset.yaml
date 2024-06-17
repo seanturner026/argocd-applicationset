@@ -25,7 +25,7 @@ spec:
         directories:
           - path: apps/infra/*/overlays/staging
         values:
-          name: "{{ index .path.segments 2 }}"
+          name: "{{ index .path.segments 2 }}-{{ index .path.segments 4 }}"
 
   template:
     metadata:
