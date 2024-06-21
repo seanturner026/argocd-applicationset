@@ -8,4 +8,4 @@ resources:
 
 images:
   - name: renovate/renovate
-    newTag: "37.409"
+    newTag: "37.414"
