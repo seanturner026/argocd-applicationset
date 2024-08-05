@@ -4,9 +4,8 @@ namespace: argocd
 
 resources:
   - https://raw.githubusercontent.com/argoproj/argo-cd/v2.11.3/manifests/install.yaml
-
-patches:
-  - path: patches/configmap.yaml
-    target:
-      kind: ConfigMap
-      name: argocd-cm
+# patches:
+#   - path: patches/configmap.yaml
+#     target:
+#       kind: ConfigMap
+#       name: argocd-cm
