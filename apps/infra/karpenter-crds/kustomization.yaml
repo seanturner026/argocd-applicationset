@@ -5,9 +5,9 @@ resources:
   - https://raw.githubusercontent.com/aws/karpenter-provider-aws/v0.37.0/pkg/apis/crds/karpenter.k8s.aws_ec2nodeclasses.yaml
   - https://raw.githubusercontent.com/aws/karpenter-provider-aws/v0.37.0/pkg/apis/crds/karpenter.sh_nodeclaims.yaml
   - https://raw.githubusercontent.com/aws/karpenter-provider-aws/v0.37.0/pkg/apis/crds/karpenter.sh_nodepools.yaml
-patches:
-  - target:
-      kind: CustomResourceDefinition
-      version: v1
-      group: apiextensions.k8s.io
-    path: patches/custom-resource-definition.yaml
+# patches:
+#   - target:
+#       kind: CustomResourceDefinition
+#       version: v1
+#       group: apiextensions.k8s.io
+#     path: patches/custom-resource-definition.yaml
