@@ -26,6 +26,7 @@ spec:
           - path: apps/infra/*/overlays/staging
         values:
           name: "{{ index .path.segments 2 }}-{{ index .path.segments 4 }}"
+          namespace: "{{ index .path.segments 2 }}"
 
   template:
     metadata:
@@ -49,6 +50,9 @@ spec:
           prune: true
           selfHeal: true
   templatePatch: |
+    spec:
+      destination:
+        namespace: "{{ .values.namespace }}"
     metadata:
       annotations:
         notifications.argoproj.io/subscribe.on-health-degraded.slack: argocd
