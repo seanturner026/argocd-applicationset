@@ -50,9 +50,11 @@ spec:
           prune: true
           selfHeal: true
   templatePatch: |
+    {{- if index .values "namespace" }}
     spec:
       destination:
         namespace: "{{ .values.namespace }}"
+    {{- end }}
     metadata:
       annotations:
         notifications.argoproj.io/subscribe.on-health-degraded.slack: argocd
