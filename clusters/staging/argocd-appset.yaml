@@ -16,6 +16,7 @@ spec:
           - path: apps/data/http-server/overlays/staging
         values:
           name: "{{ index .path.segments 2 }}-{{ index .path.segments 4 }}"
+          namespace: "{{ index .path.segments 2 }}-{{ index .path.segments 4 }}"
           images: seanturner026/kube-playground-http-server:latest
           strategy: digest
 
@@ -26,6 +27,7 @@ spec:
           - path: apps/infra/*/overlays/staging
         values:
           name: "{{ index .path.segments 2 }}-{{ index .path.segments 4 }}"
+          namespace: "{{ index .path.segments 2 }}"
 
   template:
     metadata:
@@ -41,7 +43,7 @@ spec:
         path: "{{ .path.path }}"
       destination:
         server: https://kubernetes.default.svc
-        namespace: argocd # "{{ .values.name }}"
+        namespace: "{{ .values.namespace }}"
       syncPolicy:
         syncOptions:
           - CreateNamespace=true
