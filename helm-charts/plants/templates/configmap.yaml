@@ -1,0 +1,9 @@
+{{- range $plant := .Values.plants }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ $plant }}
+data:
+  plant_name: {{ $plant }}
+{{- end }}
