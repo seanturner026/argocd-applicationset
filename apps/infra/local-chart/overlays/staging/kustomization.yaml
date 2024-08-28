@@ -1,26 +1,6 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-namespace: plants-staging
-
-# helmGlobals:
-#   chartHome: plants
-
-# helmCharts:
-#   - name: plant-chart
-#     # repo: https://seanturner026.github.io/simple-helm
-#     version: 0.6.0
-#     releaseName: simple-chart
-#     includeCRDs: false
-#     # valuesFile: ../../base.yaml
-#     # additionalValuesFiles:
-#     #   - values.yaml
-
-
-# # # values.yaml
-# # plants:
-# #   - name: rose
-# #   - name: tulip
-# #   - name: sunflower
+namespace: local-chart-staging
 
 helmGlobals:
   chartHome: ../../../../../helm-charts
@@ -31,12 +11,3 @@ helmCharts:
     valuesFile: values.yaml
     namespace: plants
     includeCRDs: false
-
-# helmGlobals:
-#   chartHome: ../../../helm-charts
-
-# helmCharts:
-# - name: generic-service
-#   releaseName: metube
-#   valuesFile: values.yaml
-#   namespace: download
