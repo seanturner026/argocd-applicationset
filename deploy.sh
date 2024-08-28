@@ -23,20 +23,6 @@ done
 
 kubectl apply -f clusters/staging/argocd-app.yaml
 
-if [ -z "${GITHUB_TOKEN}" ]
-then
-  echo -e "Environment variable GITHUB_TOKEN is not set, the renovate commands are not going to be run.\n"
-  exit 1
-else
-  if [ ! -d ".tmp" ]
-  then
-    mkdir .tmp
-  fi
-  envsubst < apps/infra/renovate/base/resources/secret.yaml > .tmp/secret.yaml
-  kubectl create namespace renovate
-  kubectl apply -f .tmp/secret.yaml
-fi
-
 password=$(kubectl get secret $secret_name -n argocd -o jsonpath='{.data.password}' | base64 --decode)
 echo -e "\nInitial user password: $password\n"
 
