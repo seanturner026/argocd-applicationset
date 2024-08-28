@@ -26,7 +26,6 @@ spec:
           - path: apps/infra/*/overlays/staging
         values:
           name: "{{ index .path.segments 2 }}-{{ index .path.segments 4 }}"
-          namespace: "{{ index .path.segments 2 }}"
 
   template:
     metadata:
@@ -42,7 +41,7 @@ spec:
         path: "{{ .path.path }}"
       destination:
         server: https://kubernetes.default.svc
-        namespace: "{{ .values.name }}"
+        namespace: argocd # "{{ .values.name }}"
       syncPolicy:
         syncOptions:
           - CreateNamespace=true
@@ -50,11 +49,6 @@ spec:
           prune: true
           selfHeal: true
   templatePatch: |
-    {{- if index .values "namespace" }}
-    spec:
-      destination:
-        namespace: "{{ .values.namespace }}"
-    {{- end }}
     metadata:
       annotations:
         notifications.argoproj.io/subscribe.on-health-degraded.slack: argocd
