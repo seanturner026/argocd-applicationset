@@ -22,6 +22,7 @@
             "matchDatasources": [
                 "docker"
             ],
+            "extractVersion": "^v(?<version>.*)$",
             "matchPackageNames": [
                 "dagandersen/argocd-diff-preview"
             ]
