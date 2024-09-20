@@ -16,13 +16,17 @@
             ]
         },
         {
-            "matchPaths": [
-                ".github/**"
+            "matchManagers": [
+                "github-actions"
             ],
+            "matchDepTypes": [
+                "docker"
+            ]
+        },
+        {
             "matchDatasources": [
                 "docker"
             ],
-            "extractVersion": "^v(?<version>.*)$",
             "matchPackageNames": [
                 "dagandersen/argocd-diff-preview"
             ]
