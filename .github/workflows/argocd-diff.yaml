@@ -25,7 +25,6 @@ jobs:
       - name: Set ArgoCD Custom Values
         run: |
           cat > values.yaml << "EOF"
-          # set whatever helm values you want
           configs:
             cm:
               kustomize.buildOptions: --load-restrictor LoadRestrictionsNone --enable-helm
@@ -38,6 +37,7 @@ jobs:
             -v /var/run/docker.sock:/var/run/docker.sock \
             -v $(pwd)/main:/base-branch \
             -v $(pwd)/pull-request:/target-branch \
+            -v $(pwd)/values.yaml:/argocd-config/values.yaml \
             -v $(pwd)/output:/output \
             -e TARGET_BRANCH=${{ github.head_ref }} \
             -e REPO=${{ github.repository }} \
