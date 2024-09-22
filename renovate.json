@@ -14,16 +14,6 @@
             "matchPaths": [
                 "apps/**"
             ]
-        },
-        {
-            "matchPaths": [
-                ".github/workflows/argocd-diff.yaml"
-            ],
-            "matchStrings": [
-                "dagandersen/argocd-diff-preview:(?<currentValue>.*?)\\s"
-            ],
-            "depNameTemplate": "dagandersen/argocd-diff-preview",
-            "datasourceTemplate": "docker"
         }
     ],
     "argocd": {
@@ -50,6 +40,16 @@
                 "https:\/\/raw\\.githubusercontent\\.com\/(?<depName>[^\/]*\/[^\/]*)\/(?<currentValue>.*?)\/"
             ],
             "datasourceTemplate": "github-tags"
+        },
+        {
+            "fileMatch": [
+                "\\.github/workflows/.*\\.ya?ml$"
+            ],
+            "matchStrings": [
+                "dagandersen/argocd-diff-preview:(?<currentValue>.*?)\\s"
+            ],
+            "depNameTemplate": "dagandersen/argocd-diff-preview",
+            "datasourceTemplate": "docker"
         }
     ]
 }
