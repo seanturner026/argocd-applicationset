@@ -16,20 +16,14 @@
             ]
         },
         {
-            "matchManagers": [
-                "github-actions"
+            "fileMatch": [
+                ".github/workflows/argocd-diff.yaml"
             ],
-            "matchDepTypes": [
-                "docker"
-            ]
-        },
-        {
-            "matchDatasources": [
-                "docker"
+            "matchStrings": [
+                "dagandersen/argocd-diff-preview:(?<currentValue>.*?)\\s"
             ],
-            "matchPackageNames": [
-                "dagandersen/argocd-diff-preview"
-            ]
+            "depNameTemplate": "dagandersen/argocd-diff-preview",
+            "datasourceTemplate": "docker"
         }
     ],
     "argocd": {

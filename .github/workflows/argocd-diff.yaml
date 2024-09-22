@@ -37,7 +37,7 @@ jobs:
 
       - name: Post diff as comment
         run: |
-          wc -l output/diff.md
+          # cat this when the output is too great.
           cat output/diff.md
           gh pr comment ${{ github.event.number }} --repo ${{ github.repository }} --body-file output/diff.md --edit-last || \
           gh pr comment ${{ github.event.number }} --repo ${{ github.repository }} --body-file output/diff.md
