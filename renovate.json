@@ -16,7 +16,7 @@
             ]
         },
         {
-            "fileMatch": [
+            "matchPaths": [
                 ".github/workflows/argocd-diff.yaml"
             ],
             "matchStrings": [
