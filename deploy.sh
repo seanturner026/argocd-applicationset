@@ -4,7 +4,7 @@ set -euo pipefail
 
 kind create cluster --name local
 kubectl create namespace argocd
-kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+kustomize build apps/infra/argocd/overlays/staging | kubectl apply -f -
 
 i=0
 max_attempts=15
