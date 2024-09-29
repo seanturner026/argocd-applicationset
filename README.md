@@ -10,3 +10,9 @@
 1. How do we update various environments
 1. How do we cutover from an Application to an applicationset?
 1. Is there a way to inflate an applicationset so that I can see the changes?
+
+## Testing renovate
+
+```
+$ LOG_LEVEL=debug npx renovate --platform=local --repository-cache=reset
+```
