@@ -1,10 +1,13 @@
 {
     "$schema": "https://docs.renovatebot.com/renovate-schema.json",
     "extends": [
-        "config:base"
+        "config:recommended"
     ],
     "labels": [
         "renovate"
+    ],
+    "baseBranches": [
+        "main"
     ],
     "packageRules": [
         {
@@ -22,26 +25,29 @@
         ],
         "pinDigests": false
     },
-    "regexManagers": [
+    "customManagers": [
         {
+            "customType": "regex",
             "fileMatch": [
-                "apps\/.+\/kustomization.ya?ml$"
+                "applications/.+/kustomization.ya?ml$"
             ],
             "matchStrings": [
-                "https:\/\/github\\.com\/(?<depName>.*\/.*?)\/releases\/download\/(?<currentValue>.*?)\/"
+                "https://github\\.com/(?<depName>.*/.*?)/releases/download/(?<currentValue>.*?)/"
             ],
             "datasourceTemplate": "github-releases"
         },
         {
+            "customType": "regex",
             "fileMatch": [
-                "apps\/.+\/kustomization.ya?ml$"
+                "applications/.+/kustomization.ya?ml$"
             ],
             "matchStrings": [
-                "https:\/\/raw\\.githubusercontent\\.com\/(?<depName>[^\/]*\/[^\/]*)\/(?<currentValue>.*?)\/"
+                "https://raw\\.githubusercontent\\.com/(?<depName>[^/]*/[^/]*)/(?<currentValue>.*?)/"
             ],
             "datasourceTemplate": "github-tags"
         },
         {
+            "customType": "regex",
             "fileMatch": [
                 "\\.github/workflows/.*\\.ya?ml$"
             ],
