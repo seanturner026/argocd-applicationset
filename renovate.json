@@ -1,6 +1,6 @@
 {
     "$schema": "https://docs.renovatebot.com/renovate-schema.json",
     "extends": [
-        "local>seanturner026/argocd-applicationset:renovate.js"
+        "github>seanturner026/argocd-applicationset:renovate.js"
     ]
 }
