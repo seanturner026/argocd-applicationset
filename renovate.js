@@ -9,39 +9,43 @@ module.exports = {
   packageRules: [
     ...module.exports.environments.map(dir => ({
       matchManagers: ["kustomize"],
-      matchPaths: [`apps/infra/karpenter-crds/overlays/${dir}/**`],
-      groupName: `karpenter-crds-${dir}`
+      matchPaths: [`apps/.+/${dir}/**`],
+      groupName: `karpenter-${dir}`
     }))
   ],
 
-  argocd: module.exports.environments.map(env => ({
-    fileMatch: [`apps/.+/overlays/${env}/kustomization\\.ya?ml$`],
-    pinDigests: false,
-    groupName: `argocd-${env}`
-  })),
+  argocd: [
+    ...module.exports.environments.map(env => ({
+      fileMatch: [`apps/.+/${env}/kustomization.ya?ml$`],
+      pinDigests: false,
+      groupName: `argocd-${env}`
+    }))
+  ],
 
   customManagers: [
     ...module.exports.environments.map(dir => ({
       customType: "regex",
-      fileMatch: [`apps/infra/karpenter-crds/overlays/${dir}/kustomization.ya?ml$`],
+      fileMatch: [`apps/.+/${dir}/kustomization.ya?ml$`],
       matchStrings: [
         "https://github\\.com/(?<depName>.*/.*?)/releases/download/(?<currentValue>.*?)/"
       ],
       datasourceTemplate: "github-tags",
       groupName: `karpenter-crds-${dir}`
     })),
+
     ...module.exports.environments.map(dir => ({
       customType: "regex",
-      fileMatch: [`apps/infra/karpenter-crds/overlays/${dir}/kustomization.ya?ml$`],
+      fileMatch: [`apps/.+/${dir}/kustomization.ya?ml$`],
       matchStrings: [
         "https://raw\\.githubusercontent\\.com/(?<depName>[^/]*/[^/]*)/(?<currentValue>.*?)/"
       ],
       datasourceTemplate: "github-tags",
       groupName: `karpenter-crds-${dir}`
     })),
+
     {
       customType: "regex",
-      fileMatch: ["\\.github/workflows/.*\\.ya?ml$"],
+      fileMatch: [".github/workflows/.*.ya?ml$"],
       matchStrings: [
         "dagandersen/argocd-diff-preview:(?<currentValue>.*?)\\s"
       ],
