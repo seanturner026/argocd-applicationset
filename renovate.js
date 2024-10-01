@@ -7,10 +7,10 @@ module.exports = {
   environments: ["production", "staging"],
 
   packageRules: [
-    ...module.exports.environments.map(dir => ({
+    ...module.exports.environments.map(env => ({
       matchManagers: ["kustomize"],
-      matchPaths: [`apps/.+/${dir}/**`],
-      groupName: `karpenter-${dir}`
+      matchPaths: [`apps/.+/${env}/**`],
+      groupName: `kustomize-${env}`
     }))
   ],
 
@@ -23,24 +23,24 @@ module.exports = {
   ],
 
   customManagers: [
-    ...module.exports.environments.map(dir => ({
+    ...module.exports.environments.map(env => ({
       customType: "regex",
-      fileMatch: [`apps/.+/${dir}/kustomization.ya?ml$`],
+      fileMatch: [`apps/.+/${env}/kustomization.ya?ml$`],
       matchStrings: [
         "https://github\\.com/(?<depName>.*/.*?)/releases/download/(?<currentValue>.*?)/"
       ],
       datasourceTemplate: "github-tags",
-      groupName: `karpenter-crds-${dir}`
+      groupName: `kustomize-github-${env}`
     })),
 
-    ...module.exports.environments.map(dir => ({
+    ...module.exports.environments.map(env => ({
       customType: "regex",
-      fileMatch: [`apps/.+/${dir}/kustomization.ya?ml$`],
+      fileMatch: [`apps/.+/${env}/kustomization.ya?ml$`],
       matchStrings: [
         "https://raw\\.githubusercontent\\.com/(?<depName>[^/]*/[^/]*)/(?<currentValue>.*?)/"
       ],
       datasourceTemplate: "github-tags",
-      groupName: `karpenter-crds-${dir}`
+      groupName: `kustomize-raw-github-${env}`
     })),
 
     {
