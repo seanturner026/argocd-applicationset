@@ -1,12 +1,13 @@
-const environments = ["production", "staging"];
 module.exports = {
   $schema: "https://docs.renovatebot.com/renovate-schema.json",
   extends: ["config:best-practices"],
   labels: ["renovate"],
   baseBranches: ["main"],
 
+  environments: ["production", "staging"],
+
   packageRules: [
-    ...environments.map(env => ({
+    ...module.exports.environments.map(env => ({
       matchManagers: ["kustomize"],
       matchPaths: [`apps/.+/${env}/**`],
       groupName: `kustomize-${env}`
@@ -14,7 +15,7 @@ module.exports = {
   ],
 
   argocd: [
-    ...environments.map(env => ({
+    ...module.exports.environments.map(env => ({
       fileMatch: [`apps/.+/${env}/kustomization.ya?ml$`],
       pinDigests: false,
       groupName: `argocd-${env}`
@@ -22,7 +23,7 @@ module.exports = {
   ],
 
   customManagers: [
-    ...environments.map(env => ({
+    ...module.exports.environments.map(env => ({
       customType: "regex",
       fileMatch: [`apps/.+/${env}/kustomization.ya?ml$`],
       matchStrings: [
@@ -32,7 +33,7 @@ module.exports = {
       groupName: `kustomize-github-${env}`
     })),
 
-    ...environments.map(env => ({
+    ...module.exports.environments.map(env => ({
       customType: "regex",
       fileMatch: [`apps/.+/${env}/kustomization.ya?ml$`],
       matchStrings: [
