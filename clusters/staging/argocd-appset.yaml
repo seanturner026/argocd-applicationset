@@ -15,8 +15,8 @@ spec:
         directories:
           - path: apps/data/http-server/overlays/staging
         values:
-          name: "{{ index .path.segments 2 }}-{{ index .path.segments 4 }}"
-          namespace: "{{ index .path.segments 2 }}-{{ index .path.segments 4 }}"
+          name: "{{ index .path.segments 2 }}"
+          namespace: "{{ index .path.segments 2 }}"
           images: seanturner026/kube-playground-http-server:latest
           strategy: digest
 
@@ -26,7 +26,7 @@ spec:
         directories:
           - path: apps/infra/*/overlays/staging
         values:
-          name: "{{ index .path.segments 2 }}-{{ index .path.segments 4 }}"
+          name: "{{ index .path.segments 2 }}"
           namespace: "{{ index .path.segments 2 }}"
 
   template:
