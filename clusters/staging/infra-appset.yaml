@@ -14,9 +14,26 @@ spec:
         revision: HEAD
         directories:
           - path: apps/infra/*/overlays/staging
+          - path: apps/infra/karpenter-crds/overlays/staging
+            exclude: true
         values:
           name: "{{ index .path.segments 2 }}"
           namespace: "{{ index .path.segments 2 }}"
+    - git:
+        repoURL: https://github.com/seanturner026/argocd-applicationset.git
+        revision: HEAD
+        directories:
+          - path: apps/infra/karpenter-crds/overlays/staging
+        values:
+          name: "{{ index .path.segments 2 }}"
+          namespace: "{{ index .path.segments 2 }}"
+          # for examples sake, this shouldn't really be ignored
+          ignore_differences:
+            - group: apiextensions.k8s.io/v1
+              kind: CustomResourceDefinition
+              name: ec2nodeclasses.karpenter.k8s.aws
+              jsonPointers:
+                - /spec/conversion/webhook/clientConfig/service/name
 
   template:
     metadata:
@@ -36,13 +53,24 @@ spec:
       syncPolicy:
         syncOptions:
           - CreateNamespace=true
+        automated:
+          prune: true
+          selfHeal: true
+
   templatePatch: |
     metadata:
       annotations:
         notifications.argoproj.io/subscribe.on-health-degraded.slack: argocd
         notifications.argoproj.io/subscribe.on-sync-failed.slack: argocd
+    {{- if hasKey .values.ignore_differences }}
     spec:
-      syncPolicy:
-        automated:
-          prune: false
-          selfHeal: false
+      ignoreDifferences: {{ .values.ignore_differences | toJson }}
+    {{- end }}
+
+    # {{- if index .values "images" }}
+    # spec:
+    #   syncPolicy:
+    #     automated:
+    #       prune: false
+    #       selfHeal: false
+    # {{- end }}
