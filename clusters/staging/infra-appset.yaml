@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: staging
+  name: infra
   namespace: argocd
 spec:
   syncPolicy:
@@ -9,17 +9,6 @@ spec:
   goTemplate: true
   goTemplateOptions: ["missingkey=error"]
   generators:
-    - git:
-        repoURL: https://github.com/seanturner026/argocd-applicationset.git
-        revision: HEAD
-        directories:
-          - path: apps/data/http-server/overlays/staging
-        values:
-          name: "{{ index .path.segments 2 }}"
-          namespace: "{{ index .path.segments 2 }}"
-          images: seanturner026/kube-playground-http-server:latest
-          strategy: digest
-
     - git:
         repoURL: https://github.com/seanturner026/argocd-applicationset.git
         revision: HEAD
@@ -55,8 +44,3 @@ spec:
       annotations:
         notifications.argoproj.io/subscribe.on-health-degraded.slack: argocd
         notifications.argoproj.io/subscribe.on-sync-failed.slack: argocd
-        {{- if index .values "images" }}
-        argocd-image-updater.argoproj.io/image-list: {{ .values.images }}
-        argocd-image-updater.argoproj.io/update-strategy: {{ .values.strategy }}
-        argocd-image-updater.argoproj.io/write-back-method: argocd
-        {{- end }}
