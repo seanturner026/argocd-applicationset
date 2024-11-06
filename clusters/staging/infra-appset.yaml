@@ -22,13 +22,13 @@ spec:
     - matrix:
         generators:
           - git:
-            repoURL: https://github.com/seanturner026/argocd-applicationset.git
-            revision: HEAD
-            directories:
-              - path: apps/infra/karpenter-crds/overlays/staging
-            values:
-              name: "{{ index .path.segments 2 }}"
-              namespace: "{{ index .path.segments 2 }}"
+              repoURL: https://github.com/seanturner026/argocd-applicationset.git
+              revision: HEAD
+              directories:
+                - path: apps/infra/karpenter-crds/overlays/staging
+              values:
+                name: "{{ index .path.segments 2 }}"
+                namespace: "{{ index .path.segments 2 }}"
           # for examples sake, this shouldn't really be ignored
           - list:
               ignore_differences:
