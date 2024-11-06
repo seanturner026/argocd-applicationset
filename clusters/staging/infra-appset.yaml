@@ -36,11 +36,13 @@ spec:
       syncPolicy:
         syncOptions:
           - CreateNamespace=true
-        automated:
-          prune: true
-          selfHeal: true
   templatePatch: |
     metadata:
       annotations:
         notifications.argoproj.io/subscribe.on-health-degraded.slack: argocd
         notifications.argoproj.io/subscribe.on-sync-failed.slack: argocd
+    spec:
+      syncPolicy:
+        automated:
+          prune: false
+          selfHeal: false
