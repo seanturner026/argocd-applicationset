@@ -65,7 +65,7 @@ spec:
       annotations:
         notifications.argoproj.io/subscribe.on-health-degraded.slack: argocd
         notifications.argoproj.io/subscribe.on-sync-failed.slack: argocd
-    {{- if hasKey .values.ignore_differences }}
+    {{- if hasKey . "ignore_differences" }}
     spec:
       ignoreDifferences: {{ .ignore_differences | toJson }}
     {{- end }}
