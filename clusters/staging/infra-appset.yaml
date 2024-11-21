@@ -29,7 +29,7 @@ spec:
               values:
                 name: "{{ index .path.segments 2 }}"
                 namespace: "{{ index .path.segments 2 }}"
-          # for examples sake, this shouldn't really be ignored
+          # for example's sake, this shouldn't really be ignored
           - list:
               elements:
                 - ignore_differences:
@@ -45,6 +45,9 @@ spec:
       labels:
         team: "{{ index .path.segments 1 }}"
         environment: "{{ index .path.segments 4 }}"
+      annotations:
+        notifications.argoproj.io/subscribe.on-health-degraded.slack: argocd
+        notifications.argoproj.io/subscribe.on-sync-failed.slack: argocd
     spec:
       project: default
       source:
@@ -62,19 +65,7 @@ spec:
           selfHeal: true
 
   templatePatch: |
-    metadata:
-      annotations:
-        notifications.argoproj.io/subscribe.on-health-degraded.slack: argocd
-        notifications.argoproj.io/subscribe.on-sync-failed.slack: argocd
     {{- if hasKey . "ignore_differences" }}
     spec:
       ignoreDifferences: {{ .ignore_differences | toJson }}
     {{- end }}
-
-    # {{- if index .values "images" }}
-    # spec:
-    #   syncPolicy:
-    #     automated:
-    #       prune: false
-    #       selfHeal: false
-    # {{- end }}
