@@ -16,8 +16,15 @@ spec:
           - path: apps/infra/*/overlays/staging
         values:
           name: "{{ index .path.segments 2 }}"
-          namespace: "{{ index .path.segments 2 }}"
-
+          namespace: |
+            {{- $argocd_apps := list
+              "argocd-image-updater"
+            -}}
+            {{- if has (index .path.segments 2) $argocd_apps -}}
+            argocd
+            {{- else -}}
+            {{ index .path.segments 2 }}
+            {{- end -}}
   template:
     metadata:
       name: "{{ .values.name }}"
