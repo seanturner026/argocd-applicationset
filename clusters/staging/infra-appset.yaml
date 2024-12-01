@@ -14,7 +14,6 @@ spec:
         revision: HEAD
         directories:
           - path: apps/infra/*/overlays/staging
-            exclude: true
         values:
           name: "{{ index .path.segments 2 }}"
           namespace: "{{ index .path.segments 2 }}"
