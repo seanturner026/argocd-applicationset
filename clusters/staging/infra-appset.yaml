@@ -14,37 +14,26 @@ spec:
         revision: HEAD
         directories:
           - path: apps/infra/*/overlays/staging
-          - path: apps/infra/karpenter-crds/overlays/staging
-            exclude: true
         values:
           name: "{{ index .path.segments 2 }}"
-          namespace: "{{ index .path.segments 2 }}"
-    - matrix:
-        generators:
-          - git:
-              repoURL: https://github.com/seanturner026/argocd-applicationset.git
-              revision: HEAD
-              directories:
-                - path: apps/infra/karpenter-crds/overlays/staging
-              values:
-                name: "{{ index .path.segments 2 }}"
-                namespace: "{{ index .path.segments 2 }}"
-          # for examples sake, this shouldn't really be ignored
-          - list:
-              elements:
-                - ignore_differences:
-                    - group: apiextensions.k8s.io/v1
-                      kind: CustomResourceDefinition
-                      name: ec2nodeclasses.karpenter.k8s.aws
-                      jsonPointers:
-                        - /spec/conversion/webhook/clientConfig/service/name
-
+          namespace: |
+            {{- $argocd_apps := list
+              "argocd-image-updater"
+            -}}
+            {{- if has (index .path.segments 2) $argocd_apps -}}
+            argocd
+            {{- else -}}
+            {{ index .path.segments 2 }}
+            {{- end -}}
   template:
     metadata:
       name: "{{ .values.name }}"
       labels:
         team: "{{ index .path.segments 1 }}"
         environment: "{{ index .path.segments 4 }}"
+      annotations:
+        notifications.argoproj.io/subscribe.on-health-degraded.slack: argocd
+        notifications.argoproj.io/subscribe.on-sync-failed.slack: argocd
     spec:
       project: default
       source:
@@ -62,19 +51,12 @@ spec:
           selfHeal: true
 
   templatePatch: |
-    metadata:
-      annotations:
-        notifications.argoproj.io/subscribe.on-health-degraded.slack: argocd
-        notifications.argoproj.io/subscribe.on-sync-failed.slack: argocd
-    {{- if hasKey . "ignore_differences" }}
-    spec:
-      ignoreDifferences: {{ .ignore_differences | toJson }}
+    {{- if eq .values.name "karpenter-crds"  }}
+      spec:
+        ignoreDifferences:
+          - group: apiextensions.k8s.io/v1
+            kind: CustomResourceDefinition
+            name: ec2nodeclasses.karpenter.k8s.aws
+            jsonPointers:
+              - /spec/conversion/webhook/clientConfig/service/name
     {{- end }}
-
-    # {{- if index .values "images" }}
-    # spec:
-    #   syncPolicy:
-    #     automated:
-    #       prune: false
-    #       selfHeal: false
-    # {{- end }}
